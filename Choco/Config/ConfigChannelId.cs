@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
@@ -9,7 +10,8 @@ namespace ConfigChannels
 {
     public class ConfigChannelId
     {
-        private static readonly Dictionary<string, ulong> ChannelIds = new Dictionary<string, ulong>();
+        private static readonly Dictionary<string, ulong> ChannelIds = new();
+        public static readonly Dictionary<ulong, string> ChannelEmojies = new();
 
         static ConfigChannelId()
         {
@@ -20,10 +22,12 @@ namespace ConfigChannels
             ChannelIds["IdChannelGameLogs"] = configuration.GetValue<ulong>("ID_CHANNEL_GAME_LOGS");
             ChannelIds["IdChannelGameUpdateMenu"] = configuration.GetValue<ulong>("ID_CHANNEL_GAME_UPDATE_MENU");
             ChannelIds["IdChannelSendEmoji"] = configuration.GetValue<ulong>("ID_CHANNEL_SEND_EMOJI");
-            ChannelIds["IdChannelSendReaction1"] = configuration.GetValue<ulong>("ID_CHANNEL_SEND_REACTION1");
-            ChannelIds["IdChannelSendReaction2"] = configuration.GetValue<ulong>("ID_CHANNEL_SEND_REACTION2");
             ChannelIds["IdChannelSendAchievement"] = configuration.GetValue<ulong>("ID_CHANNEL_SEND_ACHIEVEMENT");
+
+            var emojiChannels = configuration.GetValue<string>("ID_CHANNELS_SEND_REACTION").Split(",").Select(x => x.Split(":"));
+            ChannelEmojies = emojiChannels.ToDictionary(x => Convert.ToUInt64(x[0]), x => $":{x[1]}:");
         }
+
         public static ulong GetChannelId(string key)
         {
             if (ChannelIds.TryGetValue(key, out ulong id))
