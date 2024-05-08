@@ -32,9 +32,13 @@ POSTGRES_DB=choco
 ID_CHANNEL_GAME_LOGS=<SELECT ID>
 ID_CHANNEL_GAME_UPDATE_MENU=<SELECT ID>
 ID_CHANNEL_SEND_EMOJI=<SELECT ID>
-ID_CHANNEL_SEND_REACTION1=<SELECT ID>
-ID_CHANNEL_SEND_REACTION2=<SELECT ID>
 ID_CHANNEL_SEND_ACHIEVEMENT=<SELECT ID>
+```
+
+**ServiceChannelReactionEmoji** is configured using the variable `ID_CHANNELS_SEND_REACTION` in pairs of `channel_id=emoji_name` separated by commas. Example:
+
+```plaintext
+ID_CHANNELS_SEND_REACTION=1111111111111111111:heart,2222222222222222222:fire
 ```
 
 ## Token/Prefix Configuration
